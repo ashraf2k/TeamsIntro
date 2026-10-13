@@ -1,0 +1,533 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Teams for Teachers</title>
+<meta name="description" content="A quick bilingual (English / Arabic) guide for teachers to schedule, start and control Microsoft Teams meetings.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f5fb; --surface:#ffffff; --surface-2:#efedf8; --ink:#1d1b2e; --muted:#5d5a73;
+  --line:#dddaec; --accent:#4f46b8; --accent-ink:#ffffff; --accent-soft:#e6e3fa;
+  --ok:#1f7a4d; --ok-soft:#dff3e8; --warn:#9a5b00; --warn-soft:#fdf0d8;
+  --shadow:0 1px 2px rgba(20,16,60,.06),0 6px 20px rgba(20,16,60,.06);
+  --radius:14px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#14131c; --surface:#1d1c28; --surface-2:#262535; --ink:#ecebf5; --muted:#a9a6c0;
+    --line:#34324a; --accent:#a39cff; --accent-ink:#14131c; --accent-soft:#2c2950;
+    --ok:#6fd3a0; --ok-soft:#1b3328; --warn:#f2bf63; --warn-soft:#3a2e15;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.25);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#14131c; --surface:#1d1c28; --surface-2:#262535; --ink:#ecebf5; --muted:#a9a6c0;
+  --line:#34324a; --accent:#a39cff; --accent-ink:#14131c; --accent-soft:#2c2950;
+  --ok:#6fd3a0; --ok-soft:#1b3328; --warn:#f2bf63; --warn-soft:#3a2e15;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.25);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans Arabic",system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;font-size:17px;line-height:1.65}
+a{color:var(--accent)}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:6px}
+
+/* Header */
+header.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top-inner{max-width:1180px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;gap:12px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.05rem;text-decoration:none;color:var(--ink);margin-inline-end:auto}
+.brand-mark{width:34px;height:34px;border-radius:9px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-weight:700}
+.tbtn{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-size:.95rem}
+.tbtn:hover{border-color:var(--accent)}
+.tbtn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:600}
+.menu-btn{display:none}
+
+/* Layout */
+.wrap{max-width:1180px;margin:0 auto;padding:0 16px;display:grid;grid-template-columns:260px minmax(0,1fr);gap:32px}
+nav.side{position:sticky;top:76px;align-self:start;max-height:calc(100vh - 92px);overflow:auto;padding:20px 0}
+nav.side ol{list-style:none;margin:0;padding:0;counter-reset:s}
+nav.side li a{display:flex;gap:10px;align-items:center;padding:8px 10px;border-radius:10px;text-decoration:none;color:var(--muted);font-size:.95rem}
+nav.side li a:hover{background:var(--surface-2);color:var(--ink)}
+nav.side li a.active{background:var(--accent-soft);color:var(--ink);font-weight:600}
+nav.side .num{flex:0 0 26px;height:26px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font-size:.8rem;background:var(--surface)}
+nav.side li a.done .num{background:var(--ok);color:#fff;border-color:var(--ok)}
+.progress{margin:0 10px 16px;font-size:.85rem;color:var(--muted)}
+.bar{height:8px;border-radius:99px;background:var(--surface-2);overflow:hidden;margin-top:6px}
+.bar i{display:block;height:100%;width:0;background:var(--ok);transition:width .3s}
+
+main{padding:28px 0 80px;min-width:0}
+.hero{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:32px;box-shadow:var(--shadow);margin-bottom:28px}
+.hero h1{font-size:clamp(1.6rem,3.5vw,2.3rem);line-height:1.25;margin:0 0 10px}
+.hero p{margin:0 0 18px;color:var(--muted);max-width:62ch}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:var(--surface-2);border-radius:999px;padding:5px 12px;font-size:.88rem}
+.search{margin-top:20px;display:flex;gap:8px}
+.search input{flex:1;min-width:0;padding:12px 16px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit}
+
+section.topic{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:26px 28px;margin-bottom:22px;box-shadow:var(--shadow)}
+.topic-head{display:flex;align-items:flex-start;gap:14px;margin-bottom:6px}
+.topic-ico{flex:0 0 46px;height:46px;border-radius:12px;background:var(--accent-soft);display:grid;place-items:center;font-size:1.4rem}
+.topic h2{margin:0;font-size:1.35rem;line-height:1.35}
+.topic .lead{margin:2px 0 0;color:var(--muted)}
+.topic h3{font-size:1.05rem;margin:22px 0 10px}
+ol.steps{list-style:none;padding:0;margin:10px 0 0;counter-reset:st}
+ol.steps li{counter-increment:st;position:relative;padding-inline-start:46px;margin-bottom:14px}
+ol.steps li::before{content:counter(st);position:absolute;inset-inline-start:0;top:0;width:32px;height:32px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-weight:700;font-size:.9rem}
+kbd,.ui{font-family:inherit;background:var(--surface-2);border:1px solid var(--line);border-bottom-width:2px;border-radius:6px;padding:1px 7px;font-size:.9em;font-weight:600;white-space:nowrap}
+.note{border-radius:12px;padding:12px 16px;margin:16px 0 0;display:flex;gap:10px}
+.note.tip{background:var(--ok-soft)}
+.note.warn{background:var(--warn-soft)}
+.note b{white-space:nowrap}
+
+table.ctrl{width:100%;border-collapse:collapse;margin-top:10px;font-size:.95rem}
+table.ctrl th,table.ctrl td{border-bottom:1px solid var(--line);padding:10px 8px;text-align:start;vertical-align:top}
+table.ctrl th{color:var(--muted);font-weight:600;font-size:.85rem}
+.scroll-x{overflow-x:auto}
+
+.done-row{display:flex;justify-content:flex-end;margin-top:18px}
+.done-btn{border:1px solid var(--line);background:var(--bg);padding:8px 16px;border-radius:999px;cursor:pointer}
+.done-btn[aria-pressed="true"]{background:var(--ok);border-color:var(--ok);color:#fff}
+
+/* Mock UI illustration */
+.mock{margin-top:16px;border:1px solid var(--line);border-radius:12px;background:var(--bg);padding:12px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.mock span{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:.85rem;display:inline-flex;gap:6px;align-items:center}
+.mock span.hot{border-color:var(--accent);background:var(--accent-soft);font-weight:600}
+.mock span.end{background:#c4314b;color:#fff;border-color:#c4314b}
+
+.cheat{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-top:12px}
+.cheat div{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:14px}
+.cheat b{display:block;margin-bottom:4px}
+
+details.faq{border-bottom:1px solid var(--line);padding:12px 0}
+details.faq summary{cursor:pointer;font-weight:600}
+details.faq p{margin:8px 0 0;color:var(--muted)}
+
+.empty{display:none;text-align:center;color:var(--muted);padding:40px}
+footer{color:var(--muted);font-size:.85rem;text-align:center;padding:24px 16px 40px}
+
+@media (max-width:900px){
+  .wrap{grid-template-columns:1fr}
+  nav.side{position:fixed;inset-block:62px 0;inset-inline-start:0;width:min(300px,86vw);max-height:none;background:var(--surface);border-inline-end:1px solid var(--line);padding:16px 10px;transform:translateX(-105%);transition:transform .25s;z-index:30}
+  [dir="rtl"] nav.side{transform:translateX(105%)}
+  nav.side.open{transform:none!important;box-shadow:var(--shadow)}
+  .menu-btn{display:inline-flex}
+  .hero{padding:22px}
+  section.topic{padding:20px 16px}
+  .brand .full{display:none}
+}
+@media print{
+  header.top,nav.side,.done-row,.search{display:none!important}
+  .wrap{display:block}
+  section.topic{break-inside:avoid;box-shadow:none}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-inner">
+    <button class="tbtn menu-btn" id="menuBtn" aria-label="Menu">☰</button>
+    <a class="brand" href="#top"><span class="brand-mark">T</span><span class="full" data-i18n="brand"></span></a>
+    <button class="tbtn" id="themeBtn" aria-label="Theme">🌓</button>
+    <button class="tbtn primary" id="langBtn" aria-label="Language"></button>
+  </div>
+</header>
+
+<div class="wrap" id="top">
+  <nav class="side" id="side" aria-label="Topics">
+    <div class="progress"><span id="progText"></span><div class="bar"><i id="progBar"></i></div></div>
+    <ol id="toc"></ol>
+  </nav>
+  <main>
+    <div class="hero">
+      <h1 data-i18n="heroTitle"></h1>
+      <p data-i18n="heroText"></p>
+      <div class="chips" id="chips"></div>
+      <div class="search"><input id="search" type="search" autocomplete="off"></div>
+    </div>
+    <div id="content"></div>
+    <div class="empty" id="empty" data-i18n="noResults"></div>
+  </main>
+</div>
+<footer data-i18n="footer"></footer>
+
+<script>
+/* ---------- Content (English + Arabic) ---------- */
+const UI = {
+  en:{brand:"Teams for Teachers",heroTitle:"Microsoft Teams for teachers — the essentials",
+      heroText:"Short, step-by-step lessons to schedule a class, start it, and stay in control of students' microphones, cameras and chat. Follow the topics in order or jump to what you need.",
+      chips:["⏱ About 15 minutes","🖥 Desktop & web app","📱 Works on mobile too"],
+      search:"Search… e.g. mute, camera, chat, record",noResults:"No topic matches your search.",
+      progress:(d,t)=>`${d} of ${t} topics done`,markDone:"Mark as done ✓",done:"Done ✓",
+      lang:"العربية",tip:"Tip",warn:"Note",
+      footer:"An independent learning guide for teachers. Menu names can differ slightly between Teams versions and your school's settings. Microsoft Teams is a trademark of Microsoft."},
+  ar:{brand:"Teams للمعلمين",heroTitle:"مايكروسوفت تيمز للمعلمين — الأساسيات",
+      heroText:"دروس قصيرة خطوة بخطوة لجدولة الحصة وبدئها والتحكم في ميكروفونات الطلاب وكاميراتهم والدردشة. اتبع الموضوعات بالترتيب أو انتقل مباشرة إلى ما تحتاجه.",
+      chips:["⏱ حوالي ١٥ دقيقة","🖥 تطبيق سطح المكتب والويب","📱 يعمل على الجوال أيضاً"],
+      search:"ابحث… مثلاً: كتم، كاميرا، دردشة، تسجيل",noResults:"لا يوجد موضوع يطابق بحثك.",
+      progress:(d,t)=>`أنجزت ${d} من ${t} موضوعات`,markDone:"تحديد كمكتمل ✓",done:"مكتمل ✓",
+      lang:"English",tip:"نصيحة",warn:"ملاحظة",
+      footer:"دليل تعليمي مستقل للمعلمين. قد تختلف أسماء القوائم قليلاً بين إصدارات تيمز وحسب إعدادات مدرستك. مايكروسوفت تيمز علامة تجارية لشركة مايكروسوفت."}
+};
+
+/* Each topic: id, icon, title, lead, blocks[] ; blocks: {h}, {steps:[]}, {tip}, {warn}, {mock:[]}, {table:{head,rows}}, {cheat:[[t,d]]}, {faq:[[q,a]]}, {p} */
+const TOPICS = [
+{ id:"start", icon:"👋",
+  en:{title:"1. Get started",lead:"Sign in and learn the four buttons you will use most.",blocks:[
+    {steps:[
+      "Open the Teams desktop app, or go to <b>teams.microsoft.com</b> in Chrome or Edge.",
+      "Sign in with the <b>school email and password</b> your school gave you (not a personal account).",
+      "Look at the bar on the left side of the screen. These are the places you will use most:"]},
+    {cheat:[["🔔 Activity","Mentions, replies and notifications."],["💬 Chat","Private and group messages."],["👥 Teams","Your class teams and their channels."],["📅 Calendar","Schedule, join and manage meetings."]]},
+    {tip:"Use the <b>desktop app</b> for teaching. It gives you all meeting controls; some options are limited in the browser and on phones."}
+  ]},
+  ar:{title:"١. البداية",lead:"سجّل الدخول وتعرّف على الأزرار الأربعة التي ستستخدمها كثيراً.",blocks:[
+    {steps:[
+      "افتح تطبيق تيمز على الحاسوب، أو ادخل إلى <b>teams.microsoft.com</b> من متصفح Chrome أو Edge.",
+      "سجّل الدخول <b>ببريد المدرسة وكلمة المرور</b> التي زودتك بها المدرسة (وليس حساباً شخصياً).",
+      "انظر إلى الشريط الموجود على جانب الشاشة. هذه هي الأماكن الأكثر استخداماً:"]},
+    {cheat:[["🔔 النشاط (Activity)","الإشارات والردود والإشعارات."],["💬 الدردشة (Chat)","الرسائل الخاصة والجماعية."],["👥 الفرق (Teams)","فرق الفصول وقنواتها."],["📅 التقويم (Calendar)","جدولة الاجتماعات والانضمام إليها وإدارتها."]]},
+    {tip:"استخدم <b>تطبيق سطح المكتب</b> عند التدريس، فهو يوفر جميع أدوات التحكم في الاجتماع، بينما تكون بعض الخيارات محدودة في المتصفح والجوال."}
+  ]}
+},
+{ id:"schedule", icon:"📅",
+  en:{title:"2. Schedule a class meeting",lead:"Create the meeting in advance so students can find it and join on time.",blocks:[
+    {h:"Option A — from the Calendar"},
+    {steps:[
+      "Click <span class='ui'>Calendar</span> on the left.",
+      "Click <span class='ui'>+ New meeting</span> (top corner).",
+      "Type a <b>title</b>, e.g. “Grade 8 Science – Lesson 4”.",
+      "Under <b>Add required attendees</b>, type student names or a class group.",
+      "Choose the <b>date, start and end time</b>. For weekly lessons, set <span class='ui'>Does not repeat</span> to <b>Weekly</b>.",
+      "Optional: choose a <b>channel</b> so the meeting appears inside your class team.",
+      "Click <span class='ui'>Save</span> (or <span class='ui'>Send</span>). Students receive an invitation."]},
+    {h:"Option B — from your class team"},
+    {steps:[
+      "Open <span class='ui'>Teams</span> and select your class team.",
+      "In the channel, click the arrow next to <span class='ui'>Meet</span> and choose <span class='ui'>Schedule a meeting</span>.",
+      "Fill in the details and click <span class='ui'>Send</span>. Everyone in the team can see and join it from the channel."]},
+    {tip:"Before saving, open <b>Meeting options</b> (topic 4) and set students to <b>attendees</b>. This is the key to staying in control."}
+  ]},
+  ar:{title:"٢. جدولة اجتماع للحصة",lead:"أنشئ الاجتماع مسبقاً ليتمكن الطلاب من إيجاده والانضمام في الوقت المحدد.",blocks:[
+    {h:"الطريقة الأولى — من التقويم"},
+    {steps:[
+      "اضغط <span class='ui'>التقويم (Calendar)</span> من الشريط الجانبي.",
+      "اضغط <span class='ui'>+ اجتماع جديد (New meeting)</span> في أعلى الشاشة.",
+      "اكتب <b>عنواناً</b>، مثل: «علوم الصف الثامن – الدرس ٤».",
+      "في خانة <b>الحضور المطلوبين</b>، اكتب أسماء الطلاب أو مجموعة الفصل.",
+      "اختر <b>التاريخ ووقت البداية والنهاية</b>. للحصص الأسبوعية غيّر <span class='ui'>لا يتكرر</span> إلى <b>أسبوعياً</b>.",
+      "اختياري: اختر <b>قناة</b> ليظهر الاجتماع داخل فريق الفصل.",
+      "اضغط <span class='ui'>حفظ (Save)</span> أو <span class='ui'>إرسال (Send)</span>، فتصل الدعوة إلى الطلاب."]},
+    {h:"الطريقة الثانية — من فريق الفصل"},
+    {steps:[
+      "افتح <span class='ui'>الفرق (Teams)</span> واختر فريق فصلك.",
+      "داخل القناة، اضغط السهم بجانب <span class='ui'>اجتماع (Meet)</span> ثم اختر <span class='ui'>جدولة اجتماع</span>.",
+      "أكمل التفاصيل واضغط <span class='ui'>إرسال</span>. سيظهر الاجتماع في القناة لجميع أعضاء الفريق."]},
+    {tip:"قبل الحفظ، افتح <b>خيارات الاجتماع</b> (الموضوع ٤) واجعل الطلاب <b>حضوراً (attendees)</b>؛ فهذا هو مفتاح التحكم في الحصة."}
+  ]}
+},
+{ id:"join", icon:"▶️",
+  en:{title:"3. Start or join a meeting",lead:"Start a scheduled class, or open an instant one.",blocks:[
+    {h:"Start a scheduled class"},
+    {steps:[
+      "Open <span class='ui'>Calendar</span> and click your meeting, then click <span class='ui'>Join</span>.",
+      "On the preview screen, check your <b>camera</b> and <b>microphone</b> switches, and choose your audio device.",
+      "Click <span class='ui'>Join now</span>. You are in!"]},
+    {h:"Start an instant meeting"},
+    {steps:[
+      "In <span class='ui'>Calendar</span>, click <span class='ui'>Meet now</span>.",
+      "Click <span class='ui'>Start meeting</span>, then <span class='ui'>Join now</span>.",
+      "Use <b>Copy meeting link</b> and paste it in the class chat so students can join."]},
+    {h:"The meeting toolbar"},
+    {mock:["💬 Chat","👥 People","✋ Raise","😊 React","🧩 Rooms","••• More","📷 Camera","🎙 Mic","⬆ Share",{t:"Leave ▾",c:"end"}]},
+    {tip:"Join 5 minutes early. Students waiting in the <b>lobby</b> will appear in the People pane for you to admit."}
+  ]},
+  ar:{title:"٣. بدء الاجتماع أو الانضمام إليه",lead:"ابدأ حصة مجدولة أو افتح اجتماعاً فورياً.",blocks:[
+    {h:"بدء حصة مجدولة"},
+    {steps:[
+      "افتح <span class='ui'>التقويم</span> واضغط على الاجتماع، ثم اضغط <span class='ui'>انضمام (Join)</span>.",
+      "في شاشة المعاينة، تحقق من مفتاحي <b>الكاميرا</b> و<b>الميكروفون</b> واختر جهاز الصوت.",
+      "اضغط <span class='ui'>الانضمام الآن (Join now)</span>. أنت الآن في الاجتماع!"]},
+    {h:"بدء اجتماع فوري"},
+    {steps:[
+      "من <span class='ui'>التقويم</span> اضغط <span class='ui'>اجتماع الآن (Meet now)</span>.",
+      "اضغط <span class='ui'>بدء الاجتماع</span> ثم <span class='ui'>الانضمام الآن</span>.",
+      "استخدم <b>نسخ رابط الاجتماع</b> والصقه في دردشة الفصل لينضم الطلاب."]},
+    {h:"شريط أدوات الاجتماع"},
+    {mock:["💬 الدردشة","👥 الأشخاص","✋ رفع اليد","😊 تفاعل","🧩 الغرف","••• المزيد","📷 الكاميرا","🎙 الميكروفون","⬆ مشاركة",{t:"مغادرة ▾",c:"end"}]},
+    {tip:"ادخل قبل الموعد بخمس دقائق. الطلاب المنتظرون في <b>الردهة (Lobby)</b> سيظهرون في قائمة الأشخاص لتسمح لهم بالدخول."}
+  ]}
+},
+{ id:"options", icon:"⚙️",
+  en:{title:"4. Meeting options: control the class",lead:"One page that decides who can talk, show video, present and chat.",blocks:[
+    {h:"Open Meeting options"},
+    {steps:[
+      "<b>Before class:</b> open the meeting in <span class='ui'>Calendar</span> → <span class='ui'>Edit</span> → <span class='ui'>Meeting options</span>.",
+      "<b>During class:</b> click <span class='ui'>••• More</span> → <span class='ui'>Settings</span> → <span class='ui'>Meeting options</span>.",
+      "Change the settings below, then click <span class='ui'>Save</span>."]},
+    {h:"Recommended settings for a class"},
+    {table:{head:["Setting","Recommended choice","Why"],rows:[
+      ["Who can bypass the lobby?","People in my organization (or Only me)","Outsiders wait for you to admit them."],
+      ["Who can present?","Only me and co-organizers","Students become <b>attendees</b> and cannot share screen, mute others or remove people."],
+      ["Allow mic for attendees","Off at the start, turn On when needed","Prevents background noise; students can't unmute."],
+      ["Allow camera for attendees","On or Off as your school requires","Controls whether students can turn on video."],
+      ["Meeting chat","On / In-meeting only / Off","“In-meeting only” stops chat before and after class."],
+      ["Allow reactions","On","Lets students respond with emoji quietly."]]}},
+    {warn:"Mic and camera controls work only for <b>attendees</b>. If “Who can present” is set to Everyone, students are presenters and these switches will not affect them."}
+  ]},
+  ar:{title:"٤. خيارات الاجتماع: التحكم في الحصة",lead:"صفحة واحدة تحدد من يتحدث ومن يفتح الكاميرا ومن يعرض ومن يكتب في الدردشة.",blocks:[
+    {h:"فتح خيارات الاجتماع"},
+    {steps:[
+      "<b>قبل الحصة:</b> افتح الاجتماع من <span class='ui'>التقويم</span> ← <span class='ui'>تحرير</span> ← <span class='ui'>خيارات الاجتماع (Meeting options)</span>.",
+      "<b>أثناء الحصة:</b> اضغط <span class='ui'>••• المزيد</span> ← <span class='ui'>الإعدادات</span> ← <span class='ui'>خيارات الاجتماع</span>.",
+      "غيّر الإعدادات التالية ثم اضغط <span class='ui'>حفظ</span>."]},
+    {h:"الإعدادات المقترحة للحصة"},
+    {table:{head:["الإعداد","الاختيار المقترح","السبب"],rows:[
+      ["من يمكنه تجاوز الردهة؟","الأشخاص في مؤسستي (أو أنا فقط)","ينتظر الغرباء حتى تسمح لهم بالدخول."],
+      ["من يمكنه العرض؟","أنا والمنظمون المشاركون فقط","يصبح الطلاب <b>حضوراً</b> فلا يستطيعون مشاركة الشاشة أو كتم الآخرين أو إخراجهم."],
+      ["السماح بالميكروفون للحضور","مغلق في البداية، وافتحه عند الحاجة","يمنع الضوضاء، ولا يستطيع الطلاب إلغاء الكتم."],
+      ["السماح بالكاميرا للحضور","مفتوح أو مغلق حسب سياسة المدرسة","يتحكم في قدرة الطلاب على تشغيل الفيديو."],
+      ["دردشة الاجتماع","تشغيل / أثناء الاجتماع فقط / إيقاف","خيار «أثناء الاجتماع فقط» يمنع الدردشة قبل الحصة وبعدها."],
+      ["السماح بالتفاعلات","تشغيل","يتيح للطلاب التفاعل بالرموز بهدوء."]]}},
+    {warn:"أدوات التحكم في الميكروفون والكاميرا تعمل على <b>الحضور (attendees)</b> فقط. إذا كان «من يمكنه العرض» = الجميع، فسيكون الطلاب مقدّمين ولن تؤثر عليهم هذه الإعدادات."}
+  ]}
+},
+{ id:"live", icon:"🎙",
+  en:{title:"5. Mics & cameras during class",lead:"Mute everyone, lock mics and cameras, or allow one student to speak.",blocks:[
+    {h:"For the whole class"},
+    {steps:[
+      "Click <span class='ui'>People</span> in the toolbar.",
+      "Click <span class='ui'>Mute all</span> to mute everyone once (students can unmute themselves again).",
+      "To <b>lock</b> mics: click <span class='ui'>•••</span> next to <b>Participants</b> → <span class='ui'>Disable mic for attendees</span>.",
+      "To lock cameras: same menu → <span class='ui'>Disable camera for attendees</span>.",
+      "To give everyone permission back, choose <span class='ui'>Allow mic for attendees</span> / <span class='ui'>Allow camera for attendees</span>."]},
+    {h:"For one student"},
+    {steps:[
+      "In <span class='ui'>People</span>, point to the student's name and click <span class='ui'>•••</span>.",
+      "Choose <span class='ui'>Allow mic</span> to let only this student speak (e.g. when they raise their hand), or <span class='ui'>Disable mic</span> / <span class='ui'>Disable camera</span>.",
+      "Other useful items here: <span class='ui'>Mute participant</span>, <span class='ui'>Spotlight</span> (show their video to everyone) and <span class='ui'>Remove from meeting</span>."]},
+    {h:"Raised hands"},
+    {p:"Students click <span class='ui'>✋ Raise</span>. Their names appear in order at the top of the People list. After they speak, use <span class='ui'>Lower all hands</span>."},
+    {tip:"A smooth routine: lock all mics → student raises hand → <b>Allow mic</b> for that student → <b>Disable mic</b> again when finished."}
+  ]},
+  ar:{title:"٥. الميكروفونات والكاميرات أثناء الحصة",lead:"اكتم الجميع، أو اقفل الميكروفونات والكاميرات، أو اسمح لطالب واحد بالتحدث.",blocks:[
+    {h:"لجميع الطلاب"},
+    {steps:[
+      "اضغط <span class='ui'>الأشخاص (People)</span> في شريط الأدوات.",
+      "اضغط <span class='ui'>كتم الكل (Mute all)</span> لكتم الجميع مرة واحدة (يمكن للطلاب إلغاء الكتم بعدها).",
+      "<b>لقفل</b> الميكروفونات: اضغط <span class='ui'>•••</span> بجانب <b>المشاركين</b> ← <span class='ui'>تعطيل الميكروفون للحضور</span>.",
+      "لقفل الكاميرات: من نفس القائمة ← <span class='ui'>تعطيل الكاميرا للحضور</span>.",
+      "لإعادة السماح للجميع اختر <span class='ui'>السماح بالميكروفون للحضور</span> / <span class='ui'>السماح بالكاميرا للحضور</span>."]},
+    {h:"لطالب واحد"},
+    {steps:[
+      "في قائمة <span class='ui'>الأشخاص</span>، مرّر المؤشر على اسم الطالب واضغط <span class='ui'>•••</span>.",
+      "اختر <span class='ui'>السماح بالميكروفون</span> ليتحدث هذا الطالب فقط (مثلاً عند رفع يده)، أو <span class='ui'>تعطيل الميكروفون</span> / <span class='ui'>تعطيل الكاميرا</span>.",
+      "خيارات مفيدة أخرى: <span class='ui'>كتم المشارك</span>، و<span class='ui'>تسليط الضوء (Spotlight)</span> لعرض الفيديو الخاص به للجميع، و<span class='ui'>إزالة من الاجتماع</span>."]},
+    {h:"رفع اليد"},
+    {p:"يضغط الطالب <span class='ui'>✋ رفع اليد</span>، فيظهر اسمه بالترتيب في أعلى قائمة الأشخاص. بعد أن يتحدث استخدم <span class='ui'>خفض جميع الأيدي</span>."},
+    {tip:"روتين سهل: اقفل جميع الميكروفونات ← يرفع الطالب يده ← <b>السماح بالميكروفون</b> له ← <b>تعطيل الميكروفون</b> مرة أخرى بعد انتهائه."}
+  ]}
+},
+{ id:"chat", icon:"💬",
+  en:{title:"6. Control the meeting chat",lead:"Keep the chat useful — or turn it off when you need focus.",blocks:[
+    {steps:[
+      "Open <span class='ui'>Meeting options</span> (topic 4).",
+      "Find <b>Meeting chat</b> and choose: <b>On</b> (always), <b>In-meeting only</b> (only while the class is live) or <b>Off</b>.",
+      "Click <span class='ui'>Save</span>. The change applies immediately, even during class."]},
+    {tip:"Pin important messages (homework, links) in the chat: point to the message → <span class='ui'>•••</span> → <span class='ui'>Pin</span>."},
+    {warn:"Turning chat off also stops your own messages to students. Use <b>In-meeting only</b> if you just want to prevent chatting outside class time."}
+  ]},
+  ar:{title:"٦. التحكم في دردشة الاجتماع",lead:"اجعل الدردشة مفيدة، أو أوقفها عندما تحتاج إلى التركيز.",blocks:[
+    {steps:[
+      "افتح <span class='ui'>خيارات الاجتماع</span> (الموضوع ٤).",
+      "ابحث عن <b>دردشة الاجتماع</b> واختر: <b>تشغيل</b> (دائماً)، أو <b>أثناء الاجتماع فقط</b>، أو <b>إيقاف</b>.",
+      "اضغط <span class='ui'>حفظ</span>. يُطبَّق التغيير فوراً حتى أثناء الحصة."]},
+    {tip:"ثبّت الرسائل المهمة (الواجبات والروابط) في الدردشة: مرّر المؤشر على الرسالة ← <span class='ui'>•••</span> ← <span class='ui'>تثبيت</span>."},
+    {warn:"إيقاف الدردشة يمنع رسائلك أنت أيضاً. استخدم <b>أثناء الاجتماع فقط</b> إذا أردت منع الدردشة خارج وقت الحصة فقط."}
+  ]}
+},
+{ id:"share", icon:"🖥",
+  en:{title:"7. Share your screen or slides",lead:"Show a presentation, a website or your whole screen.",blocks:[
+    {steps:[
+      "Click <span class='ui'>⬆ Share</span> in the toolbar.",
+      "Choose <b>Screen</b> (everything you see), <b>Window</b> (one app only — safer), or a <b>PowerPoint Live</b> file.",
+      "Playing a video? Turn on <span class='ui'>Include sound</span> first.",
+      "To finish, click <span class='ui'>Stop sharing</span>."]},
+    {tip:"Share a <b>Window</b> rather than the whole screen, so students don't see notifications or other open apps."}
+  ]},
+  ar:{title:"٧. مشاركة الشاشة أو العرض التقديمي",lead:"اعرض شرائح أو موقعاً أو الشاشة كاملة.",blocks:[
+    {steps:[
+      "اضغط <span class='ui'>⬆ مشاركة (Share)</span> في شريط الأدوات.",
+      "اختر <b>الشاشة</b> (كل ما يظهر أمامك)، أو <b>نافذة</b> (تطبيق واحد فقط — أكثر أماناً)، أو ملف <b>PowerPoint Live</b>.",
+      "ستعرض فيديو؟ فعّل <span class='ui'>تضمين الصوت</span> أولاً.",
+      "للإنهاء اضغط <span class='ui'>إيقاف المشاركة</span>."]},
+    {tip:"شارك <b>نافذة</b> بدلاً من الشاشة كاملة حتى لا يرى الطلاب الإشعارات أو التطبيقات الأخرى المفتوحة."}
+  ]}
+},
+{ id:"record", icon:"⏺",
+  en:{title:"8. Record the lesson",lead:"Let absent students watch later.",blocks:[
+    {steps:[
+      "Click <span class='ui'>••• More</span> → <span class='ui'>Record and transcribe</span> → <span class='ui'>Start recording</span>.",
+      "Everyone sees a notice that the meeting is being recorded.",
+      "To stop: same menu → <span class='ui'>Stop recording</span>.",
+      "The recording appears in the meeting chat (and in the channel if it was a channel meeting)."]},
+    {warn:"Follow your school's rules on recording students. Recording may be disabled by your IT administrator."}
+  ]},
+  ar:{title:"٨. تسجيل الحصة",lead:"ليتمكن الطلاب الغائبون من مشاهدتها لاحقاً.",blocks:[
+    {steps:[
+      "اضغط <span class='ui'>••• المزيد</span> ← <span class='ui'>التسجيل والنسخ</span> ← <span class='ui'>بدء التسجيل</span>.",
+      "يظهر للجميع تنبيه بأن الاجتماع قيد التسجيل.",
+      "للإيقاف: من نفس القائمة ← <span class='ui'>إيقاف التسجيل</span>.",
+      "يظهر التسجيل في دردشة الاجتماع (وفي القناة إذا كان الاجتماع داخل قناة)."]},
+    {warn:"اتبع سياسة مدرستك بخصوص تسجيل الطلاب. قد يكون التسجيل معطلاً من قِبل مسؤول تقنية المعلومات."}
+  ]}
+},
+{ id:"rooms", icon:"🧩",
+  en:{title:"9. Breakout rooms (group work)",lead:"Split the class into small groups and bring them back.",blocks:[
+    {steps:[
+      "Click <span class='ui'>🧩 Rooms</span> in the toolbar (desktop app).",
+      "Choose the <b>number of rooms</b> and <b>Automatically</b> or <b>Manually</b> assign students, then <span class='ui'>Create rooms</span>.",
+      "Click <span class='ui'>Start rooms</span>. You can join any room to help a group.",
+      "Use <span class='ui'>Make an announcement</span> to message all rooms, then <span class='ui'>Close rooms</span> to bring everyone back."]},
+    {tip:"In room settings, you can set a <b>time limit</b> so rooms close automatically."}
+  ]},
+  ar:{title:"٩. غرف المجموعات (العمل الجماعي)",lead:"قسّم الفصل إلى مجموعات صغيرة ثم أعدهم.",blocks:[
+    {steps:[
+      "اضغط <span class='ui'>🧩 الغرف (Rooms)</span> في شريط الأدوات (تطبيق سطح المكتب).",
+      "اختر <b>عدد الغرف</b> وطريقة التوزيع <b>تلقائياً</b> أو <b>يدوياً</b>، ثم <span class='ui'>إنشاء الغرف</span>.",
+      "اضغط <span class='ui'>بدء الغرف</span>. يمكنك الدخول إلى أي غرفة لمساعدة مجموعة.",
+      "استخدم <span class='ui'>إرسال إعلان</span> لمراسلة جميع الغرف، ثم <span class='ui'>إغلاق الغرف</span> لإعادة الجميع."]},
+    {tip:"من إعدادات الغرف يمكنك تحديد <b>مدة زمنية</b> لتُغلق الغرف تلقائياً."}
+  ]}
+},
+{ id:"end", icon:"⏹",
+  en:{title:"10. End the class",lead:"Leaving is not the same as ending.",blocks:[
+    {mock:["Leave",{t:"▾",c:"hot"},{t:"End meeting",c:"end"}]},
+    {steps:[
+      "Click the arrow next to <span class='ui'>Leave</span>.",
+      "Choose <span class='ui'>End meeting</span> → <span class='ui'>End</span>. Everyone is removed at once."]},
+    {warn:"If you only click <b>Leave</b>, students can stay in the meeting without you."},
+    {tip:"After class, open the meeting in Calendar → <b>Attendance</b> to download the attendance report."}
+  ]},
+  ar:{title:"١٠. إنهاء الحصة",lead:"المغادرة تختلف عن إنهاء الاجتماع.",blocks:[
+    {mock:["مغادرة",{t:"▾",c:"hot"},{t:"إنهاء الاجتماع",c:"end"}]},
+    {steps:[
+      "اضغط السهم بجانب <span class='ui'>مغادرة (Leave)</span>.",
+      "اختر <span class='ui'>إنهاء الاجتماع (End meeting)</span> ← <span class='ui'>إنهاء</span>. يخرج الجميع فوراً."]},
+    {warn:"إذا ضغطت <b>مغادرة</b> فقط، يمكن للطلاب البقاء في الاجتماع بدونك."},
+    {tip:"بعد الحصة افتح الاجتماع من التقويم ← <b>الحضور (Attendance)</b> لتنزيل تقرير الحضور."}
+  ]}
+},
+{ id:"faq", icon:"❓",
+  en:{title:"Quick checklist & FAQ",lead:"Answers to the most common problems.",blocks:[
+    {cheat:[["Before class","Schedule → Meeting options → students as attendees → mics off."],["Start","Join 5 min early → admit the lobby."],["During","People pane → allow one mic at a time."],["End","Leave ▾ → End meeting → check attendance."]]},
+    {faq:[
+      ["I don't see “Disable mic for attendees”.","You must be the organizer or a presenter, and “Who can present” must not be Everyone. Use the desktop app."],
+      ["A student keeps unmuting.","“Mute all” is temporary. Use “Disable mic for attendees” to lock mics."],
+      ["Students can share their screen.","They are presenters. Set “Who can present” to “Only me and co-organizers”."],
+      ["Students cannot hear me.","Check your mic is not muted and the right speaker/mic is chosen: ••• More → Settings → Device settings."],
+      ["A student is stuck in the lobby.","Open People — waiting students appear at the top. Click Admit."],
+      ["The menu looks different from this guide.","Teams updates its design often, and schools can turn features off. Look for the same words in the ••• More menu."]]}
+  ]},
+  ar:{title:"قائمة سريعة وأسئلة شائعة",lead:"إجابات لأكثر المشكلات تكراراً.",blocks:[
+    {cheat:[["قبل الحصة","جدولة ← خيارات الاجتماع ← الطلاب حضور ← الميكروفونات مغلقة."],["البداية","ادخل قبل ٥ دقائق ← اسمح لمن في الردهة."],["أثناء الحصة","قائمة الأشخاص ← اسمح بميكروفون واحد في كل مرة."],["النهاية","مغادرة ▾ ← إنهاء الاجتماع ← راجع الحضور."]]},
+    {faq:[
+      ["لا أرى خيار «تعطيل الميكروفون للحضور».","يجب أن تكون المنظم أو مقدّماً، وألا يكون «من يمكنه العرض» = الجميع. استخدم تطبيق سطح المكتب."],
+      ["طالب يلغي الكتم باستمرار.","«كتم الكل» مؤقت. استخدم «تعطيل الميكروفون للحضور» لقفل الميكروفونات."],
+      ["الطلاب يستطيعون مشاركة الشاشة.","هم مقدّمون. اجعل «من يمكنه العرض» = «أنا والمنظمون المشاركون فقط»."],
+      ["الطلاب لا يسمعونني.","تأكد أن الميكروفون غير مكتوم وأن الجهاز الصحيح مختار: ••• المزيد ← الإعدادات ← إعدادات الجهاز."],
+      ["طالب عالق في الردهة.","افتح قائمة الأشخاص — يظهر المنتظرون في الأعلى. اضغط «سماح بالدخول»."],
+      ["القوائم تبدو مختلفة عن هذا الدليل.","يحدّث تيمز تصميمه باستمرار، وقد تعطّل المدرسة بعض الميزات. ابحث عن نفس الكلمات في قائمة ••• المزيد."]]}
+  ]}
+}];
+
+/* ---------- Rendering ---------- */
+const $ = s => document.querySelector(s);
+const store = {get(k,d){try{const v=localStorage.getItem(k);return v===null?d:JSON.parse(v)}catch(e){return d}},
+               set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+let lang = store.get("lang", (navigator.language||"").startsWith("ar") ? "ar" : "en");
+let done = store.get("done", []);
+
+function block(b,t){
+  if(b.h) return `<h3>${b.h}</h3>`;
+  if(b.p) return `<p>${b.p}</p>`;
+  if(b.steps) return `<ol class="steps">${b.steps.map(s=>`<li>${s}</li>`).join("")}</ol>`;
+  if(b.tip) return `<div class="note tip"><b>💡 ${t.tip}:</b><span>${b.tip}</span></div>`;
+  if(b.warn) return `<div class="note warn"><b>⚠️ ${t.warn}:</b><span>${b.warn}</span></div>`;
+  if(b.mock) return `<div class="mock" aria-hidden="true">${b.mock.map(m=>typeof m==="string"?`<span>${m}</span>`:`<span class="${m.c}">${m.t}</span>`).join("")}</div>`;
+  if(b.cheat) return `<div class="cheat">${b.cheat.map(([a,d])=>`<div><b>${a}</b>${d}</div>`).join("")}</div>`;
+  if(b.table) return `<div class="scroll-x"><table class="ctrl"><thead><tr>${b.table.head.map(h=>`<th>${h}</th>`).join("")}</tr></thead><tbody>${b.table.rows.map(r=>`<tr>${r.map((c,i)=>`<td>${i===0?`<b>${c}</b>`:c}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+  if(b.faq) return b.faq.map(([q,a])=>`<details class="faq"><summary>${q}</summary><p>${a}</p></details>`).join("");
+  return "";
+}
+
+function render(){
+  const t = UI[lang];
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang==="ar" ? "rtl" : "ltr";
+  document.title = t.brand;
+  document.querySelectorAll("[data-i18n]").forEach(el=>el.innerHTML=t[el.dataset.i18n]);
+  $("#langBtn").textContent = "🌐 " + t.lang;
+  $("#search").placeholder = t.search;
+  $("#chips").innerHTML = t.chips.map(c=>`<span class="chip">${c}</span>`).join("");
+  $("#content").innerHTML = TOPICS.map(tp=>{
+    const c = tp[lang], isDone = done.includes(tp.id);
+    return `<section class="topic" id="${tp.id}">
+      <div class="topic-head"><div class="topic-ico" aria-hidden="true">${tp.icon}</div>
+      <div><h2>${c.title}</h2><p class="lead">${c.lead}</p></div></div>
+      ${c.blocks.map(b=>block(b,t)).join("")}
+      <div class="done-row"><button class="done-btn" data-id="${tp.id}" aria-pressed="${isDone}">${isDone?t.done:t.markDone}</button></div>
+    </section>`;}).join("");
+  $("#toc").innerHTML = TOPICS.map((tp,i)=>`<li><a href="#${tp.id}" data-id="${tp.id}" class="${done.includes(tp.id)?"done":""}"><span class="num">${done.includes(tp.id)?"✓":(i<10?(lang==="ar"?(i+1).toLocaleString("ar-EG"):i+1):"?")}</span><span>${tp[lang].title.replace(/^[\d١-٩٠]+\.\s*/,"")}</span></a></li>`).join("");
+  progress(); filter(); observe();
+}
+function progress(){
+  const n = done.filter(id=>TOPICS.some(t=>t.id===id)).length;
+  $("#progText").textContent = UI[lang].progress(n, TOPICS.length);
+  $("#progBar").style.width = (n/TOPICS.length*100)+"%";
+}
+function filter(){
+  const q = $("#search").value.trim().toLowerCase();
+  let shown = 0;
+  document.querySelectorAll("section.topic").forEach(s=>{
+    const tp = TOPICS.find(t=>t.id===s.id);
+    const hay = (JSON.stringify(tp.en)+JSON.stringify(tp.ar)).toLowerCase();
+    const ok = !q || hay.includes(q);
+    s.style.display = ok ? "" : "none"; if(ok) shown++;
+    if(ok && q) s.querySelectorAll("details").forEach(d=>d.open=true);
+  });
+  $("#empty").style.display = shown ? "none" : "block";
+}
+let io;
+function observe(){
+  if(io) io.disconnect();
+  io = new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){
+    document.querySelectorAll("#toc a").forEach(a=>a.classList.toggle("active",a.dataset.id===e.target.id));}}),
+    {rootMargin:"-30% 0px -60% 0px"});
+  document.querySelectorAll("section.topic").forEach(s=>io.observe(s));
+}
+
+/* ---------- Events ---------- */
+$("#langBtn").onclick = ()=>{ lang = lang==="en"?"ar":"en"; store.set("lang",lang); render(); };
+$("#search").oninput = filter;
+$("#content").onclick = e=>{
+  const b = e.target.closest(".done-btn"); if(!b) return;
+  const id = b.dataset.id;
+  done = done.includes(id) ? done.filter(x=>x!==id) : [...done,id];
+  store.set("done",done); render();
+};
+$("#menuBtn").onclick = ()=>$("#side").classList.toggle("open");
+$("#toc").onclick = e=>{ if(e.target.closest("a")) $("#side").classList.remove("open"); };
+const themes = ["auto","light","dark"];
+let theme = store.get("theme","auto");
+function applyTheme(){ if(theme==="auto") document.documentElement.removeAttribute("data-theme"); else document.documentElement.dataset.theme = theme;
+  $("#themeBtn").textContent = {auto:"🌓",light:"☀️",dark:"🌙"}[theme]; }
+$("#themeBtn").onclick = ()=>{ theme = themes[(themes.indexOf(theme)+1)%3]; store.set("theme",theme); applyTheme(); };
+applyTheme(); render();
+</script>
+</body>
+</html>

@@ -110,6 +110,23 @@ details.faq p{margin:8px 0 0;color:var(--muted)}
 .empty{display:none;text-align:center;color:var(--muted);padding:40px}
 footer{color:var(--muted);font-size:.85rem;text-align:center;padding:24px 16px 40px}
 
+
+/* Annotated screenshots */
+figure.shot{margin:18px 0 6px;border:1px solid var(--line);border-radius:12px;background:var(--bg);padding:10px}
+.shot-frame{position:relative;direction:ltr;cursor:zoom-in;border-radius:8px;overflow:hidden;line-height:0}
+.shot-frame img{width:100%;height:auto;display:block}
+.mark{position:absolute;transform:translate(-50%,-50%);width:clamp(20px,3.4vw,30px);height:clamp(20px,3.4vw,30px);border-radius:50%;
+  background:#e8384f;color:#fff;font-weight:700;font-size:clamp(.7rem,1.6vw,.9rem);line-height:1;display:grid;place-items:center;
+  border:2px solid #fff;box-shadow:0 0 0 3px rgba(232,56,79,.35),0 2px 6px rgba(0,0,0,.4);animation:pulse 2.2s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 3px rgba(232,56,79,.35),0 2px 6px rgba(0,0,0,.4)}50%{box-shadow:0 0 0 8px rgba(232,56,79,.12),0 2px 6px rgba(0,0,0,.4)}}
+@media (prefers-reduced-motion:reduce){.mark{animation:none}}
+ol.legend{list-style:none;margin:12px 4px 4px;padding:0;display:grid;gap:8px}
+ol.legend li{display:flex;gap:10px;align-items:flex-start;font-size:.95rem}
+ol.legend .n{flex:0 0 24px;height:24px;border-radius:50%;background:#e8384f;color:#fff;font-weight:700;font-size:.8rem;display:grid;place-items:center;margin-top:2px}
+figcaption{font-size:.75rem;color:var(--muted);margin:8px 4px 0}
+figcaption a{color:var(--muted)}
+.shot-frame.zoom{position:fixed;inset:0;z-index:100;background:rgba(10,10,20,.92);display:grid;place-items:center;cursor:zoom-out;border-radius:0;padding:16px}
+.shot-frame.zoom .zin{position:relative;width:min(1400px,100%)}
 @media (max-width:900px){
   .wrap{grid-template-columns:1fr}
   nav.side{position:fixed;inset-block:62px 0;inset-inline-start:0;width:min(300px,86vw);max-height:none;background:var(--surface);border-inline-end:1px solid var(--line);padding:16px 10px;transform:translateX(-105%);transition:transform .25s;z-index:30}
@@ -183,6 +200,7 @@ const TOPICS = [
       "Sign in with the <b>school email and password</b> your school gave you (not a personal account).",
       "Look at the bar on the left side of the screen. These are the places you will use most:"]},
     {cheat:[["🔔 Activity","Mentions, replies and notifications."],["💬 Chat","Private and group messages."],["👥 Teams","Your class teams and their channels."],["📅 Calendar","Schedule, join and manage meetings."]]},
+    {shot:"rail"},
     {tip:"Use the <b>desktop app</b> for teaching. It gives you all meeting controls; some options are limited in the browser and on phones."}
   ]},
   ar:{title:"١. البداية",lead:"سجّل الدخول وتعرّف على الأزرار الأربعة التي ستستخدمها كثيراً.",blocks:[
@@ -191,6 +209,7 @@ const TOPICS = [
       "سجّل الدخول <b>ببريد المدرسة وكلمة المرور</b> التي زودتك بها المدرسة (وليس حساباً شخصياً).",
       "انظر إلى الشريط الموجود على جانب الشاشة. هذه هي الأماكن الأكثر استخداماً:"]},
     {cheat:[["🔔 النشاط (Activity)","الإشارات والردود والإشعارات."],["💬 الدردشة (Chat)","الرسائل الخاصة والجماعية."],["👥 الفرق (Teams)","فرق الفصول وقنواتها."],["📅 التقويم (Calendar)","جدولة الاجتماعات والانضمام إليها وإدارتها."]]},
+    {shot:"rail"},
     {tip:"استخدم <b>تطبيق سطح المكتب</b> عند التدريس، فهو يوفر جميع أدوات التحكم في الاجتماع، بينما تكون بعض الخيارات محدودة في المتصفح والجوال."}
   ]}
 },
@@ -205,6 +224,7 @@ const TOPICS = [
       "Choose the <b>date, start and end time</b>. For weekly lessons, set <span class='ui'>Does not repeat</span> to <b>Weekly</b>.",
       "Optional: choose a <b>channel</b> so the meeting appears inside your class team.",
       "Click <span class='ui'>Save</span> (or <span class='ui'>Send</span>). Students receive an invitation."]},
+    {shot:"newbtn"},{shot:"form"},
     {h:"Option B — from your class team"},
     {steps:[
       "Open <span class='ui'>Teams</span> and select your class team.",
@@ -222,6 +242,7 @@ const TOPICS = [
       "اختر <b>التاريخ ووقت البداية والنهاية</b>. للحصص الأسبوعية غيّر <span class='ui'>لا يتكرر</span> إلى <b>أسبوعياً</b>.",
       "اختياري: اختر <b>قناة</b> ليظهر الاجتماع داخل فريق الفصل.",
       "اضغط <span class='ui'>حفظ (Save)</span> أو <span class='ui'>إرسال (Send)</span>، فتصل الدعوة إلى الطلاب."]},
+    {shot:"newbtn"},{shot:"form"},
     {h:"الطريقة الثانية — من فريق الفصل"},
     {steps:[
       "افتح <span class='ui'>الفرق (Teams)</span> واختر فريق فصلك.",
@@ -237,13 +258,15 @@ const TOPICS = [
       "Open <span class='ui'>Calendar</span> and click your meeting, then click <span class='ui'>Join</span>.",
       "On the preview screen, check your <b>camera</b> and <b>microphone</b> switches, and choose your audio device.",
       "Click <span class='ui'>Join now</span>. You are in!"]},
+    {shot:"prejoin"},
     {h:"Start an instant meeting"},
     {steps:[
       "In <span class='ui'>Calendar</span>, click <span class='ui'>Meet now</span>.",
       "Click <span class='ui'>Start meeting</span>, then <span class='ui'>Join now</span>.",
       "Use <b>Copy meeting link</b> and paste it in the class chat so students can join."]},
+    {shot:"meetnow"},
     {h:"The meeting toolbar"},
-    {mock:["💬 Chat","👥 People","✋ Raise","😊 React","🧩 Rooms","••• More","📷 Camera","🎙 Mic","⬆ Share",{t:"Leave ▾",c:"end"}]},
+    {shot:"toolbar"},
     {tip:"Join 5 minutes early. Students waiting in the <b>lobby</b> will appear in the People pane for you to admit."}
   ]},
   ar:{title:"٣. بدء الاجتماع أو الانضمام إليه",lead:"ابدأ حصة مجدولة أو افتح اجتماعاً فورياً.",blocks:[
@@ -252,13 +275,15 @@ const TOPICS = [
       "افتح <span class='ui'>التقويم</span> واضغط على الاجتماع، ثم اضغط <span class='ui'>انضمام (Join)</span>.",
       "في شاشة المعاينة، تحقق من مفتاحي <b>الكاميرا</b> و<b>الميكروفون</b> واختر جهاز الصوت.",
       "اضغط <span class='ui'>الانضمام الآن (Join now)</span>. أنت الآن في الاجتماع!"]},
+    {shot:"prejoin"},
     {h:"بدء اجتماع فوري"},
     {steps:[
       "من <span class='ui'>التقويم</span> اضغط <span class='ui'>اجتماع الآن (Meet now)</span>.",
       "اضغط <span class='ui'>بدء الاجتماع</span> ثم <span class='ui'>الانضمام الآن</span>.",
       "استخدم <b>نسخ رابط الاجتماع</b> والصقه في دردشة الفصل لينضم الطلاب."]},
+    {shot:"meetnow"},
     {h:"شريط أدوات الاجتماع"},
-    {mock:["💬 الدردشة","👥 الأشخاص","✋ رفع اليد","😊 تفاعل","🧩 الغرف","••• المزيد","📷 الكاميرا","🎙 الميكروفون","⬆ مشاركة",{t:"مغادرة ▾",c:"end"}]},
+    {shot:"toolbar"},
     {tip:"ادخل قبل الموعد بخمس دقائق. الطلاب المنتظرون في <b>الردهة (Lobby)</b> سيظهرون في قائمة الأشخاص لتسمح لهم بالدخول."}
   ]}
 },
@@ -269,6 +294,7 @@ const TOPICS = [
       "<b>Before class:</b> open the meeting in <span class='ui'>Calendar</span> → <span class='ui'>Edit</span> → <span class='ui'>Meeting options</span>.",
       "<b>During class:</b> click <span class='ui'>••• More</span> → <span class='ui'>Settings</span> → <span class='ui'>Meeting options</span>.",
       "Change the settings below, then click <span class='ui'>Save</span>."]},
+    {shot:"options"},
     {h:"Recommended settings for a class"},
     {table:{head:["Setting","Recommended choice","Why"],rows:[
       ["Who can bypass the lobby?","People in my organization (or Only me)","Outsiders wait for you to admit them."],
@@ -285,6 +311,7 @@ const TOPICS = [
       "<b>قبل الحصة:</b> افتح الاجتماع من <span class='ui'>التقويم</span> ← <span class='ui'>تحرير</span> ← <span class='ui'>خيارات الاجتماع (Meeting options)</span>.",
       "<b>أثناء الحصة:</b> اضغط <span class='ui'>••• المزيد</span> ← <span class='ui'>الإعدادات</span> ← <span class='ui'>خيارات الاجتماع</span>.",
       "غيّر الإعدادات التالية ثم اضغط <span class='ui'>حفظ</span>."]},
+    {shot:"options"},
     {h:"الإعدادات المقترحة للحصة"},
     {table:{head:["الإعداد","الاختيار المقترح","السبب"],rows:[
       ["من يمكنه تجاوز الردهة؟","الأشخاص في مؤسستي (أو أنا فقط)","ينتظر الغرباء حتى تسمح لهم بالدخول."],
@@ -305,6 +332,7 @@ const TOPICS = [
       "To <b>lock</b> mics: click <span class='ui'>•••</span> next to <b>Participants</b> → <span class='ui'>Disable mic for attendees</span>.",
       "To lock cameras: same menu → <span class='ui'>Disable camera for attendees</span>.",
       "To give everyone permission back, choose <span class='ui'>Allow mic for attendees</span> / <span class='ui'>Allow camera for attendees</span>."]},
+    {shot:"people"},
     {h:"For one student"},
     {steps:[
       "In <span class='ui'>People</span>, point to the student's name and click <span class='ui'>•••</span>.",
@@ -322,6 +350,7 @@ const TOPICS = [
       "<b>لقفل</b> الميكروفونات: اضغط <span class='ui'>•••</span> بجانب <b>المشاركين</b> ← <span class='ui'>تعطيل الميكروفون للحضور</span>.",
       "لقفل الكاميرات: من نفس القائمة ← <span class='ui'>تعطيل الكاميرا للحضور</span>.",
       "لإعادة السماح للجميع اختر <span class='ui'>السماح بالميكروفون للحضور</span> / <span class='ui'>السماح بالكاميرا للحضور</span>."]},
+    {shot:"people"},
     {h:"لطالب واحد"},
     {steps:[
       "في قائمة <span class='ui'>الأشخاص</span>، مرّر المؤشر على اسم الطالب واضغط <span class='ui'>•••</span>.",
@@ -338,6 +367,7 @@ const TOPICS = [
       "Open <span class='ui'>Meeting options</span> (topic 4).",
       "Find <b>Meeting chat</b> and choose: <b>On</b> (always), <b>In-meeting only</b> (only while the class is live) or <b>Off</b>.",
       "Click <span class='ui'>Save</span>. The change applies immediately, even during class."]},
+    {shot:"chat"},
     {tip:"Pin important messages (homework, links) in the chat: point to the message → <span class='ui'>•••</span> → <span class='ui'>Pin</span>."},
     {warn:"Turning chat off also stops your own messages to students. Use <b>In-meeting only</b> if you just want to prevent chatting outside class time."}
   ]},
@@ -346,6 +376,7 @@ const TOPICS = [
       "افتح <span class='ui'>خيارات الاجتماع</span> (الموضوع ٤).",
       "ابحث عن <b>دردشة الاجتماع</b> واختر: <b>تشغيل</b> (دائماً)، أو <b>أثناء الاجتماع فقط</b>، أو <b>إيقاف</b>.",
       "اضغط <span class='ui'>حفظ</span>. يُطبَّق التغيير فوراً حتى أثناء الحصة."]},
+    {shot:"chat"},
     {tip:"ثبّت الرسائل المهمة (الواجبات والروابط) في الدردشة: مرّر المؤشر على الرسالة ← <span class='ui'>•••</span> ← <span class='ui'>تثبيت</span>."},
     {warn:"إيقاف الدردشة يمنع رسائلك أنت أيضاً. استخدم <b>أثناء الاجتماع فقط</b> إذا أردت منع الدردشة خارج وقت الحصة فقط."}
   ]}
@@ -357,6 +388,7 @@ const TOPICS = [
       "Choose <b>Screen</b> (everything you see), <b>Window</b> (one app only — safer), or a <b>PowerPoint Live</b> file.",
       "Playing a video? Turn on <span class='ui'>Include sound</span> first.",
       "To finish, click <span class='ui'>Stop sharing</span>."]},
+    {shot:"share"},
     {tip:"Share a <b>Window</b> rather than the whole screen, so students don't see notifications or other open apps."}
   ]},
   ar:{title:"٧. مشاركة الشاشة أو العرض التقديمي",lead:"اعرض شرائح أو موقعاً أو الشاشة كاملة.",blocks:[
@@ -365,6 +397,7 @@ const TOPICS = [
       "اختر <b>الشاشة</b> (كل ما يظهر أمامك)، أو <b>نافذة</b> (تطبيق واحد فقط — أكثر أماناً)، أو ملف <b>PowerPoint Live</b>.",
       "ستعرض فيديو؟ فعّل <span class='ui'>تضمين الصوت</span> أولاً.",
       "للإنهاء اضغط <span class='ui'>إيقاف المشاركة</span>."]},
+    {shot:"share"},
     {tip:"شارك <b>نافذة</b> بدلاً من الشاشة كاملة حتى لا يرى الطلاب الإشعارات أو التطبيقات الأخرى المفتوحة."}
   ]}
 },
@@ -375,6 +408,7 @@ const TOPICS = [
       "Everyone sees a notice that the meeting is being recorded.",
       "To stop: same menu → <span class='ui'>Stop recording</span>.",
       "The recording appears in the meeting chat (and in the channel if it was a channel meeting)."]},
+    {shot:"record"},
     {warn:"Follow your school's rules on recording students. Recording may be disabled by your IT administrator."}
   ]},
   ar:{title:"٨. تسجيل الحصة",lead:"ليتمكن الطلاب الغائبون من مشاهدتها لاحقاً.",blocks:[
@@ -383,6 +417,7 @@ const TOPICS = [
       "يظهر للجميع تنبيه بأن الاجتماع قيد التسجيل.",
       "للإيقاف: من نفس القائمة ← <span class='ui'>إيقاف التسجيل</span>.",
       "يظهر التسجيل في دردشة الاجتماع (وفي القناة إذا كان الاجتماع داخل قناة)."]},
+    {shot:"record"},
     {warn:"اتبع سياسة مدرستك بخصوص تسجيل الطلاب. قد يكون التسجيل معطلاً من قِبل مسؤول تقنية المعلومات."}
   ]}
 },
@@ -410,6 +445,7 @@ const TOPICS = [
     {steps:[
       "Click the arrow next to <span class='ui'>Leave</span>.",
       "Choose <span class='ui'>End meeting</span> → <span class='ui'>End</span>. Everyone is removed at once."]},
+    {shot:"leave"},
     {warn:"If you only click <b>Leave</b>, students can stay in the meeting without you."},
     {tip:"After class, open the meeting in Calendar → <b>Attendance</b> to download the attendance report."}
   ]},
@@ -418,6 +454,7 @@ const TOPICS = [
     {steps:[
       "اضغط السهم بجانب <span class='ui'>مغادرة (Leave)</span>.",
       "اختر <span class='ui'>إنهاء الاجتماع (End meeting)</span> ← <span class='ui'>إنهاء</span>. يخرج الجميع فوراً."]},
+    {shot:"leave"},
     {warn:"إذا ضغطت <b>مغادرة</b> فقط، يمكن للطلاب البقاء في الاجتماع بدونك."},
     {tip:"بعد الحصة افتح الاجتماع من التقويم ← <b>الحضور (Attendance)</b> لتنزيل تقرير الحضور."}
   ]}
@@ -445,6 +482,68 @@ const TOPICS = [
   ]}
 }];
 
+/* ---------- Real screenshots (Microsoft Learn docs, CC BY 4.0) with numbered markers [x%, y%] ---------- */
+const SRC = "https://github.com/MicrosoftDocs/msteams-docs/tree/main/msteams-platform";
+const IMG = {
+  calendar:{src:"assets/screens/calendar.png",w:1200,h:675},
+  form:{src:"assets/screens/new-meeting.png",w:433,h:409},
+  prejoin:{src:"assets/screens/prejoin.png",w:732,h:405},
+  meeting:{src:"assets/screens/in-meeting.jpg",w:1190,h:665}
+};
+const TY = 16.5; /* markers under the meeting toolbar icons */
+const SHOTS = {
+  rail:{img:"calendar",marks:[[2.4,11],[2.4,17.5],[2.4,24.5],[2.4,31]],
+    en:["<b>Activity</b> – mentions and notifications","<b>Chat</b> – private and group messages","<b>Teams</b> – your class teams and channels","<b>Calendar</b> – schedule and join meetings"],
+    ar:["<b>النشاط</b> – الإشارات والإشعارات","<b>الدردشة</b> – الرسائل الخاصة والجماعية","<b>الفرق</b> – فرق الفصول وقنواتها","<b>التقويم</b> – جدولة الاجتماعات والانضمام إليها"]},
+  newbtn:{img:"calendar",marks:[[2.4,31],[92,9.6]],
+    en:["Click <b>Calendar</b>","Click <b>New meeting</b> to open the meeting form"],
+    ar:["اضغط <b>التقويم (Calendar)</b>","اضغط <b>اجتماع جديد (New meeting)</b> لفتح نموذج الاجتماع"]},
+  form:{img:"form",marks:[[62,38],[62,48],[44,58],[52,74.5],[60,83],[88,85.5]],
+    en:["<b>Add title</b> – the lesson name","<b>Add required attendees</b> – students or the class group","<b>Date and time</b> – start and end","<b>Does not repeat</b> – change to Weekly for regular lessons","<b>Add channel</b> – post it in your class team (optional)","<b>Online meeting</b> – keep it ON. Then click <b>Save / Send</b> at the top"],
+    ar:["<b>إضافة عنوان</b> – اسم الدرس","<b>إضافة الحضور المطلوبين</b> – الطلاب أو مجموعة الفصل","<b>التاريخ والوقت</b> – البداية والنهاية","<b>لا يتكرر</b> – غيّره إلى أسبوعياً للحصص الثابتة","<b>إضافة قناة</b> – لنشره في فريق الفصل (اختياري)","<b>اجتماع عبر الإنترنت</b> – اتركه مفعّلاً، ثم اضغط <b>حفظ / إرسال</b> في الأعلى"]},
+  prejoin:{img:"prejoin",marks:[[5.5,73],[16,73],[54.5,56],[84,33],[94,87.5]],
+    en:["<b>Camera</b> on/off switch","<b>Video effects</b> – blur or change your background","<b>Microphone</b> on/off switch","<b>Computer audio</b> – choose this to use your PC's mic and speakers","<b>Join now</b> – enter the meeting"],
+    ar:["مفتاح تشغيل/إيقاف <b>الكاميرا</b>","<b>تأثيرات الفيديو</b> – تمويه الخلفية أو تغييرها","مفتاح تشغيل/إيقاف <b>الميكروفون</b>","<b>صوت الكمبيوتر</b> – لاستخدام ميكروفون وسماعات جهازك","<b>الانضمام الآن</b> – للدخول إلى الاجتماع"]},
+  meetnow:{img:"calendar",marks:[[2.4,31],[83.5,9.6],[73.5,9.6]],
+    en:["<b>Calendar</b>","<b>Meet now</b> – start an instant meeting","<b>Join with an ID</b> – join using a meeting ID and passcode"],
+    ar:["<b>التقويم</b>","<b>اجتماع الآن</b> – لبدء اجتماع فوري","<b>الانضمام بمعرّف</b> – الانضمام برقم الاجتماع ورمز المرور"]},
+  toolbar:{img:"meeting",marks:[[60.6,TY],[64.6,TY],[68.6,TY],[76.3,TY],[81.4,TY],[85.4,TY],[89.2,TY],[95.6,TY],[34.5,46]],
+    en:["<b>People</b> – participants, lobby, Mute all, mic/camera controls","<b>Chat</b> – the meeting chat","<b>React</b> – emoji reactions and ✋ Raise hand","<b>More (•••)</b> – Settings → Meeting options, Record, Breakout rooms","<b>Mic</b> – mute/unmute yourself","<b>Camera</b> – turn your video on/off","<b>Share</b> – share screen, window or PowerPoint","<b>Leave</b> – use the arrow next to it to End meeting","<b>Copy link</b> – shown after Meet now; paste it in the class chat"],
+    ar:["<b>الأشخاص</b> – المشاركون والردهة وكتم الكل والتحكم في الميكروفون/الكاميرا","<b>الدردشة</b> – دردشة الاجتماع","<b>التفاعل</b> – الرموز التعبيرية و✋ رفع اليد","<b>المزيد (•••)</b> – الإعدادات ← خيارات الاجتماع، التسجيل، غرف المجموعات","<b>الميكروفون</b> – كتم/إلغاء كتم صوتك","<b>الكاميرا</b> – تشغيل/إيقاف الفيديو","<b>مشاركة</b> – مشاركة الشاشة أو نافذة أو عرض PowerPoint","<b>مغادرة</b> – استخدم السهم بجانبه لإنهاء الاجتماع","<b>نسخ الرابط</b> – يظهر بعد «اجتماع الآن»؛ الصقه في دردشة الفصل"]},
+  people:{img:"meeting",marks:[[60.6,TY]],
+    en:["<b>People</b> – opens the participant list. At the top: <b>Mute all</b> and the <b>•••</b> menu (Disable mic / camera for attendees). Next to each student's name: their own <b>•••</b> menu"],
+    ar:["<b>الأشخاص</b> – يفتح قائمة المشاركين. في الأعلى: <b>كتم الكل</b> وقائمة <b>•••</b> (تعطيل الميكروفون/الكاميرا للحضور). وبجانب اسم كل طالب قائمة <b>•••</b> خاصة به"]},
+  chat:{img:"meeting",marks:[[64.6,TY],[76.3,TY]],
+    en:["<b>Chat</b> – open the meeting chat","<b>More (•••)</b> → Settings → <b>Meeting options</b> → Meeting chat"],
+    ar:["<b>الدردشة</b> – فتح دردشة الاجتماع","<b>المزيد (•••)</b> ← الإعدادات ← <b>خيارات الاجتماع</b> ← دردشة الاجتماع"]},
+  options:{img:"meeting",marks:[[76.3,TY]],
+    en:["<b>More (•••)</b> → <b>Settings</b> → <b>Meeting options</b> – opens the control page during class"],
+    ar:["<b>المزيد (•••)</b> ← <b>الإعدادات</b> ← <b>خيارات الاجتماع</b> – لفتح صفحة التحكم أثناء الحصة"]},
+  share:{img:"meeting",marks:[[89.2,TY]],
+    en:["<b>Share</b> – choose a screen, a window or a PowerPoint file"],
+    ar:["<b>مشاركة</b> – اختر الشاشة أو نافذة أو ملف PowerPoint"]},
+  record:{img:"meeting",marks:[[76.3,TY]],
+    en:["<b>More (•••)</b> → <b>Record and transcribe</b> → Start recording"],
+    ar:["<b>المزيد (•••)</b> ← <b>التسجيل والنسخ</b> ← بدء التسجيل"]},
+  leave:{img:"meeting",marks:[[95.6,TY]],
+    en:["<b>Leave</b> – as the organizer, click the small arrow next to it and choose <b>End meeting</b>"],
+    ar:["<b>مغادرة</b> – بصفتك المنظم اضغط السهم الصغير بجانبه واختر <b>إنهاء الاجتماع</b>"]}
+};
+const CREDIT = {en:"Screenshot: Microsoft, from Microsoft Learn documentation, licensed CC BY 4.0. Numbered markers added. Your Teams may look slightly different.",
+                ar:"لقطة شاشة: مايكروسوفت، من وثائق Microsoft Learn، برخصة CC BY 4.0، مع إضافة العلامات المرقمة. قد يختلف شكل تيمز لديك قليلاً."};
+function shot(key){
+  const s = SHOTS[key], im = IMG[s.img], L = s[lang];
+  const nums = n => lang==="ar" ? n.toLocaleString("ar-EG") : n;
+  return `<figure class="shot">
+    <div class="shot-frame" role="button" tabindex="0" aria-label="${lang==="ar"?"تكبير الصورة":"Enlarge screenshot"}"><div class="zin">
+      <img src="${im.src}" width="${im.w}" height="${im.h}" loading="lazy" alt="${L.map(x=>x.replace(/<[^>]+>/g,"")).join(" · ")}">
+      ${s.marks.map((m,i)=>`<span class="mark" style="left:${m[0]}%;top:${m[1]}%" aria-hidden="true">${nums(i+1)}</span>`).join("")}
+    </div></div>
+    <ol class="legend">${L.map((x,i)=>`<li><span class="n">${nums(i+1)}</span><span>${x}</span></li>`).join("")}</ol>
+    <figcaption>${CREDIT[lang]} <a href="${SRC}" target="_blank" rel="noopener">Source</a></figcaption>
+  </figure>`;
+}
+
 /* ---------- Rendering ---------- */
 const $ = s => document.querySelector(s);
 const store = {get(k,d){try{const v=localStorage.getItem(k);return v===null?d:JSON.parse(v)}catch(e){return d}},
@@ -462,6 +561,7 @@ function block(b,t){
   if(b.cheat) return `<div class="cheat">${b.cheat.map(([a,d])=>`<div><b>${a}</b>${d}</div>`).join("")}</div>`;
   if(b.table) return `<div class="scroll-x"><table class="ctrl"><thead><tr>${b.table.head.map(h=>`<th>${h}</th>`).join("")}</tr></thead><tbody>${b.table.rows.map(r=>`<tr>${r.map((c,i)=>`<td>${i===0?`<b>${c}</b>`:c}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
   if(b.faq) return b.faq.map(([q,a])=>`<details class="faq"><summary>${q}</summary><p>${a}</p></details>`).join("");
+  if(b.shot) return shot(b.shot);
   return "";
 }
 
@@ -527,6 +627,15 @@ let theme = store.get("theme","auto");
 function applyTheme(){ if(theme==="auto") document.documentElement.removeAttribute("data-theme"); else document.documentElement.dataset.theme = theme;
   $("#themeBtn").textContent = {auto:"🌓",light:"☀️",dark:"🌙"}[theme]; }
 $("#themeBtn").onclick = ()=>{ theme = themes[(themes.indexOf(theme)+1)%3]; store.set("theme",theme); applyTheme(); };
+document.addEventListener("click", e=>{
+  const f = e.target.closest(".shot-frame"); if(!f) return;
+  f.classList.toggle("zoom"); document.body.style.overflow = f.classList.contains("zoom") ? "hidden" : "";
+});
+document.addEventListener("keydown", e=>{
+  const z = document.querySelector(".shot-frame.zoom");
+  if(e.key==="Escape" && z){ z.classList.remove("zoom"); document.body.style.overflow=""; }
+  if(e.key==="Enter" && e.target.classList && e.target.classList.contains("shot-frame")) e.target.click();
+});
 applyTheme(); render();
 </script>
 </body>

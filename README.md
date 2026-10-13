@@ -21,3 +21,10 @@ recording, breakout rooms and ending the meeting.
 
 ## Editing the content
 All text lives in the `TOPICS` and `UI` objects inside `index.html`. Each topic has an `en` and an `ar` version.
+
+## Image credits
+The screenshots in `assets/screens/` are © Microsoft, taken from the
+[Microsoft Teams developer documentation](https://github.com/MicrosoftDocs/msteams-docs) on Microsoft Learn,
+licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Numbered markers were added on top of
+them in the page; the image files themselves are unmodified (one converted to JPEG).
+This guide is independent and not affiliated with or endorsed by Microsoft.
